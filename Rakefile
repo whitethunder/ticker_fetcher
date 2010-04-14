@@ -5,12 +5,13 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "ticker_fetcher"
-    gem.summary = %Q{Fetches all tickers for NYSE, NASD, and AMEX exchanges.}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "mattw@decho.com"
+    gem.summary = %Q{Fetches all tickers for NYSE, NASDAQ, and AMEX exchanges.}
+    gem.description = %Q{Retrieves tickers, names, and SEC descriptions for all securities listed on the 3 major US exchanges (NYSE, NASDAQ, AMEX).}
+    gem.email = "mattw922@gmail.com"
     gem.homepage = "http://github.com/whitethunder/ticker_fetcher"
     gem.authors = ["Matt White"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.add_development_dependency "fastercsv", ">= 1.5.0"
+    gem.add_development_dependency "flexmock", ">= 0.8.2"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
