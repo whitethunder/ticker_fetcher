@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ticker_fetcher}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matt White"]
-  s.date = %q{2010-04-13}
-  s.description = %q{Retrieves tickers, names, and SEC descriptions for all securities listed on the 3 major US exchanges (NYSE, NASDAQ, AMEX).}
+  s.date = %q{2010-05-25}
+  s.description = %q{Retrieves tickers, and names for all securities listed on the 3 major US exchanges (NYSE, NASDAQ, AMEX).}
   s.email = %q{mattw922@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -28,7 +28,9 @@ Gem::Specification.new do |s|
      "test/helper.rb",
      "test/nasd_test_data.csv",
      "test/nyse_test_data.csv",
-     "test/test_ticker_fetcher.rb"
+     "test/test_ticker_fetcher.rb",
+     "ticker_fetcher-0.1.0.gem",
+     "ticker_fetcher.gemspec"
   ]
   s.homepage = %q{http://github.com/whitethunder/ticker_fetcher}
   s.rdoc_options = ["--charset=UTF-8"]
