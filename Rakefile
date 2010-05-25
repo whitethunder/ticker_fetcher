@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "ticker_fetcher"
     gem.summary = %Q{Fetches all tickers for NYSE, NASDAQ, and AMEX exchanges.}
-    gem.description = %Q{Retrieves tickers, names, and SEC descriptions for all securities listed on the 3 major US exchanges (NYSE, NASDAQ, AMEX).}
+    gem.description = %Q{Retrieves tickers, and names for all securities listed on the 3 major US exchanges (NYSE, NASDAQ, AMEX).}
     gem.email = "mattw922@gmail.com"
     gem.homepage = "http://github.com/whitethunder/ticker_fetcher"
     gem.authors = ["Matt White"]

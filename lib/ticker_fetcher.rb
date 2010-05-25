@@ -3,6 +3,12 @@ require 'open-uri'
 require 'fastercsv'
 
 class TickerFetcher
+  Symbol = 0
+  Name = 1
+  LastSale = 2
+  MarketCap = 3
+  Sector = 5
+  Industry = 6
   attr_accessor :exchanges
 
   # Passing 1 or more exchange names will retrieve only those exchanges. Default
@@ -10,14 +16,16 @@ class TickerFetcher
   def initialize
     @exchanges = {}
     @exchange_urls = {
-      'NASD' => 'http://www.nasdaq.com/asp/symbols.asp?exchange=Q&start=0',
-      'AMEX' => 'http://www.nasdaq.com/asp/symbols.asp?exchange=1&start=0',
-      'NYSE' => 'http://www.nasdaq.com/asp/symbols.asp?exchange=N&start=0'
+      'NASD' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download',
+      'AMEX' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=AMEX&render=download',
+      'NYSE' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NYSE&render=download'
     }
   end
 
-  def retrieve(*exchanges_to_get)
-    @exchange_urls.delete_if { |k,v| !exchanges_to_get.flatten.include?(k.upcase) } unless exchanges_to_get.empty?
+  def retrieve(exchange)
+    unless exchange == :all
+      @exchange_urls.delete_if { |k,v| exchange.upcase != k }
+    end
     @exchange_urls.each { |exchange, url| @exchanges[exchange] = parse_exchange(exchange, url) }
   end
 
@@ -31,12 +39,11 @@ class TickerFetcher
   def parse_csv(data)
     tickers = []
     FasterCSV.parse(data) { |row|
-      name = row[0]
-      ticker = row[1].strip.gsub('"', '')
+      name = row[Name]
+      ticker = row[Symbol].strip.gsub('"', '')
       unless(ticker.nil? || ticker.empty? || ticker == 'Symbol')
         ticker = ticker.gsub('/', '.').gsub('^', '-') if ticker =~ /\W/
-        description = row[5].strip
-        tickers << [ticker, name, description]
+        tickers << [ticker, name]
       end
     }
     tickers
