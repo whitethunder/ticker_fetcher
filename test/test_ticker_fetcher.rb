@@ -19,11 +19,12 @@ class TestTickerFetcher < Test::Unit::TestCase
     assert_nil(@t_mock.exchanges['AMEX'])
     assert_equal('SC', @t_mock.exchanges['NYSE'][0][0])
     assert_equal('AC-B', @t_mock.exchanges['NYSE'][1][0])
-    assert_equal('C-A', @t_mock.exchanges['NYSE'][2][0])
+    assert_equal('C.A', @t_mock.exchanges['NYSE'][2][0])
   end
 
   def test_retrieve_with_two_exchanges_returns_a_ticker_fetcher_with_the_correct_data
-    @t_mock.retrieve('NYSE', 'NASD')
+    @t_mock.retrieve('NYSE')
+    @t_mock.retrieve('NASD')
     assert_not_nil(@t_mock.exchanges['NYSE'])
     assert_not_nil(@t_mock.exchanges['NASD'])
     assert_nil(@t_mock.exchanges['AMEX'])
