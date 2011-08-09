@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.authors = ["Matt White"]
   s.email = %q{mattw922@gmail.com}
   s.homepage = %q{http://github.com/whitethunder/ticker_fetcher}
-  s.summary = %q{Fetches all tickers for NYSE, NASDAQ, and AMEX exchanges.}
-  s.description = %q{Retrieves tickers, and names for all securities listed on the 3 major US exchanges (NYSE, NASDAQ, AMEX).}
+  s.summary = %q{Fetches all tickers and other useful data for NYSE, NASDAQ, and AMEX exchanges.}
+  s.description = %q{Retrieves tickers, names, and other useful data for all stocks listed on the 3 major US exchanges (NYSE, NASDAQ, AMEX).}
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test}/*`.split("\n")
   s.require_paths = ["lib"]
