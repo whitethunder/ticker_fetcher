@@ -7,17 +7,17 @@ class TickerFetcher
   Name = 1
   LastSale = 2
   MarketCap = 3
+  IPOYear = 4
   Sector = 5
   Industry = 6
-  attr_reader :exchanges
+  attr_reader :exchanges, :exchange_urls
 
-  # Passing 1 or more exchange names will retrieve only those exchanges. Default
-  # is to retrieve all.
+  # Passing an exchange name will retrieve only that exchange. Default is to retrieve all.
   def initialize
     @exchanges = {}
     @exchange_urls = {
-      'NASD' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download',
       'AMEX' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=AMEX&render=download',
+      'NASD' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download',
       'NYSE' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NYSE&render=download'
     }
   end
@@ -42,15 +42,39 @@ class TickerFetcher
   private
 
   def parse_csv(data)
-    tickers = []
-    CSV.parse(data) { |row|
-      name = row[Name]
-      ticker = row[Symbol].strip.gsub('"', '')
-      unless(ticker.nil? || ticker.empty? || ticker == 'Symbol')
-        ticker = ticker.gsub('/', '.').gsub('^', '-') if ticker =~ /\W/
-        tickers << [ticker, name]
-      end
-    }
-    tickers
+    CSV.parse(data, :headers => true).inject([]) do |tickers, row|
+      tickers << [ticker(row), name(row), last_sale(row), market_cap(row), ipo_year(row), sector(row), industry(row)]
+    end
+  end
+
+  def name(row)
+    row[Name]
+  end
+
+  def ticker(row)
+    ticker = row[Symbol].strip.gsub('"', '')
+    unless(ticker.nil? || ticker.empty?)
+      ticker = ticker =~ /\W/ ? ticker.gsub('/', '.').gsub('^', '-') : ticker
+    end
+  end
+
+  def last_sale(row)
+    row[LastSale]
+  end
+
+  def market_cap(row)
+    row[MarketCap]
+  end
+
+  def ipo_year(row)
+    row[IPOYear]
+  end
+
+  def sector(row)
+    row[Sector]
+  end
+
+  def industry(row)
+    row[Industry]
   end
 end
