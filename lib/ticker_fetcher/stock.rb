@@ -1,5 +1,3 @@
-require 'ticker_fetcher/retriever'
-
 module TickerFetcher
   class Stock
     attr_reader :symbol, :name, :last_sale, :market_cap, :ipo_year, :sector, :industry
