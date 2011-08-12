@@ -1,5 +1,5 @@
 require 'helper'
-require 'lib/ticker_fetcher/stock'
+require 'ticker_fetcher/stock'
 
 class TestStock < Test::Unit::TestCase
   def setup
