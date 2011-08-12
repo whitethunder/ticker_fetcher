@@ -1,6 +1,17 @@
 = ticker_fetcher
 
-Description goes here.
+Downloads basic company information for the three major US stock exchanges (NYSE, Nasdaq, Amex).
+
+== Installation
+
+    gem install ticker_fetcher
+
+== Usage
+
+    tf = TickerFetcher::Retriever.new
+    tf.run                            # gets all 3 exchanges
+    tf.run('NASD')                    # gets the specified exchange
+    tf['NASD']
 
 == Note on Patches/Pull Requests
  
