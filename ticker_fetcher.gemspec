@@ -3,7 +3,7 @@
 
 Gem::Specification.new do |s|
   s.name = "ticker_fetcher"
-  s.version = "0.4.1"
+  s.version = "0.4.2"
   s.authors = ["Matt White"]
   s.email = ["mattw922@gmail.com"]
   s.homepage = "http://github.com/whitethunder/ticker_fetcher"
