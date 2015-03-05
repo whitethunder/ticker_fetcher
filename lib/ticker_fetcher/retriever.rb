@@ -1,34 +1,21 @@
-require 'rubygems'
-require 'open-uri'
 require 'csv'
+require 'open-uri'
 require 'ticker_fetcher/stock'
 
 module TickerFetcher
   class Retriever
-    Symbol = 0
-    Name = 1
-    LastSale = 2
-    MarketCap = 3
-    IPOYear = 4
-    Sector = 5
-    Industry = 6
-    attr_reader :exchanges, :exchange_urls
+    attr_reader :exchanges
 
     # Passing an exchange name will retrieve only that exchange. Default is to retrieve all.
     def initialize
       @exchanges = {}
-      @exchange_urls = {
-        'AMEX' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=AMEX&render=download',
-        'NASD' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download',
-        'NYSE' => 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NYSE&render=download'
-      }
     end
 
     def run(exchange=:all)
       if exchange == :all
-        @exchange_urls.each { |exchange, url| @exchanges[exchange] = parse_exchange(exchange, url) }
+        EXCHANGE_URLS.each { |exchange, url| @exchanges[exchange] = parse_exchange(exchange, url) }
       else
-        @exchanges[exchange] = parse_exchange(exchange, @exchange_urls[exchange])
+        @exchanges[exchange] = parse_exchange(exchange, EXCHANGE_URLS[exchange])
       end
     end
 
@@ -44,40 +31,36 @@ module TickerFetcher
     private
 
     def parse_csv(data)
-      CSV.parse(data, :headers => true).inject([]) do |stocks, row|
-        stocks << TickerFetcher::Stock.new([ticker(row), name(row), last_sale(row), market_cap(row), ipo_year(row), sector(row), industry(row)])
+      CSV.parse(data, headers: true).inject([]) do |stocks, row|
+        stocks << TickerFetcher::Stock.new(row)
       end
     end
 
     def name(row)
-      row[Name]
+      row['Name']
     end
 
     def ticker(row)
-      ticker = row[Symbol].strip.gsub('"', '')
+      ticker = row['Symbol'].strip.gsub('"', '')
       unless(ticker.nil? || ticker.empty?)
         ticker = ticker =~ /\W/ ? ticker.gsub('/', '.').gsub('^', '-') : ticker
       end
     end
 
     def last_sale(row)
-      row[LastSale]
+      row['LastSale']
     end
 
     def market_cap(row)
-      row[MarketCap]
-    end
-
-    def ipo_year(row)
-      row[IPOYear]
+      row['MarketCap']
     end
 
     def sector(row)
-      row[Sector]
+      row['Sector']
     end
 
     def industry(row)
-      row[Industry]
+      row['Industry']
     end
   end
 end

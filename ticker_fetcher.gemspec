@@ -3,7 +3,7 @@
 
 Gem::Specification.new do |s|
   s.name = "ticker_fetcher"
-  s.version = "0.4.2"
+  s.version = "0.5.0"
   s.authors = ["Matt White"]
   s.email = ["mattw922@gmail.com"]
   s.homepage = "http://github.com/whitethunder/ticker_fetcher"
@@ -12,7 +12,8 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")
   s.require_paths = ["lib"]
+  s.license = "MIT"
 
-  s.add_development_dependency("fakeweb")
+  s.add_development_dependency("fakeweb", "~> 1.3.0", ">= 1.3.0")
 end
 

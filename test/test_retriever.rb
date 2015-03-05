@@ -4,7 +4,7 @@ require 'ticker_fetcher/retriever'
 class TestRetriever < Test::Unit::TestCase
   def setup
     @retriever = TickerFetcher::Retriever.new
-    @retriever.exchange_urls.each do |exchange, url|
+    TickerFetcher::EXCHANGE_URLS.each do |exchange, url|
       FakeWeb.register_uri(
         :get,
         url,
@@ -56,12 +56,6 @@ class TestRetriever < Test::Unit::TestCase
     @retriever.run('NYSE')
     assert_equal('72858350', @retriever.exchanges['NYSE'].first.market_cap)
     assert_equal('85473000', @retriever.exchanges['NYSE'].last.market_cap)
-  end
-
-  def test_retrieve_with_one_exchange_returns_a_ticker_fetcher_with_correct_ipo_year
-    @retriever.run('NYSE')
-    assert_equal('1999', @retriever.exchanges['NYSE'].first.ipo_year)
-    assert_equal('2015', @retriever.exchanges['NYSE'].last.ipo_year)
   end
 
   def test_retrieve_with_one_exchange_returns_a_ticker_fetcher_with_correct_sector
